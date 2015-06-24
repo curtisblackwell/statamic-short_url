@@ -1,13 +1,14 @@
-statamic-entry
+statamic-short_url
 =================
 
-A Statamic add-on so I can post via my iPhone/iPad. To use:
+A Statamic add-on that allows you to use/create short urls
 
 1. Install
-2. Copy/create the config file with a token you can use to authenticate
-3. Create complete entry in a text editor
-4. Pass file (URL Encoded) to `http://<yoursite.com>/TRIGGER/entry/post?token=mytoken&data=file%20data`
-	1. for a draft, pass `status=draft` as a parameter
+2. On your short domain, create a .htaccess file that takes the shortcode and redirects it to `yourrealdomain.com/TRIGGER/short_url?redirect=shortcode`. A sample line is:
+```
+RewriteRule ^(\w+)/?$ http://yourrealdomain.com/TRIGGER/short_url/redirect?shortcode=$1 [L]
+```
+3. To create a shortcode either use the API (`$this->addon('short_url')->create($url)` or the hook `yourrealdomain.com/TRIGGER/short_url?create="http://url-to-shorten.com"`
 	
 ## LICENSE
 
