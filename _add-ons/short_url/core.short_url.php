@@ -31,7 +31,7 @@ class Core_short_url extends Core
 		// add one here because can't encode an ID of 0, otherwise it breaks on first run
 		$shortcode = ShortUrl::encode(count($urls) + 1);
 		
-		$urls[] = array('shortcode' => $shortcode, 'url' => $url );
+		$urls[] = array('shortcode' => $shortcode, 'url' => $url, 'created_date' => time(), 'clicks' => 0);
 		$this->storage->putYAML('urls', $urls);
 		
 		return $shortcode;
@@ -45,7 +45,12 @@ class Core_short_url extends Core
     	}
     	
 		$urls = $this->storage->getYAML('urls');
+		$url_data = &$urls[$index];
 		
-		return $urls[$index]['url'];
+		$url_data['clicks']++;
+
+		$this->storage->putYAML('urls', $urls);
+		
+		return $url_data['url'];
     }
 }
