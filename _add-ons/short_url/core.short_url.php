@@ -13,6 +13,11 @@ class Core_short_url extends Core
 
 		return $url;
 	}
+	
+	public function getOverviewData() {
+		return array('shorturls' => $this->storage->getYAML('urls'));
+	}
+	
 	public function create($url) {
 		$urls = $this->storage->getYAML('urls');
 		

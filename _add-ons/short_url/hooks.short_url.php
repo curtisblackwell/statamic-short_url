@@ -2,6 +2,24 @@
 
 class Hooks_short_url extends Hooks
 {
+	public function control_panel__add_routes() {
+		$app = \Slim\Slim::getInstance();
+		$core = $this->core;
+
+		$app->get('/short-urls', function() use ($app, $core) {
+			authenticateForRole('admin');
+			doStatamicVersionCheck($app);
+
+			$template_list = array("short-urls-overview");
+			Statamic_View::set_templates(array_reverse($template_list), __DIR__ . '/templates');
+
+			$data = $core->getOverviewData();
+
+			$app->render(null, array('route' => 'short-urls', 'app' => $app) + $data);
+
+		})->name('short-urls');
+	}
+
     public function short_url__create() {
     	$url = Request::get('url');
     	
