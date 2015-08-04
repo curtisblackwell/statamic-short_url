@@ -24,4 +24,19 @@ class Plugin_short_url extends Plugin
         $url = $this->fetchParam('url');
         return $this->create($url);
     }
+
+
+
+
+
+    /**
+     * Expand a URL.
+     * @author Curtis Blackwell
+     * @return string The expanded URL.
+     */
+    public function expand()
+    {
+        $url = $this->fetchParam('url');
+        return $this->core->expand($url);
+    }
 }
