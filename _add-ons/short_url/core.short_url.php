@@ -5,24 +5,12 @@ require_once 'vendor/autoload.php';
 
 class Core_short_url extends Core
 {
-	private function ensureProtocol($url) {
-	    // Prepend "http://" to any link missing the HTTP protocol text.
-		if (preg_match('|^https*://|', $url) === 0) {
-			$url = 'http://' . $url . '/';
-		}
-
-		return $url;
-	}
-
 	public function getOverviewData() {
 		return array('shorturls' => $this->storage->getYAML('urls'));
 	}
 
 	public function create($url) {
 		$urls = $this->storage->getYAML('urls');
-
-		// put the http on it if needed
-		$url = $this->ensureProtocol($url);
 
 		// check to see if it exists already
 		$index = count($urls) ? array_search($url, array_column($urls, 'url')) : FALSE;
